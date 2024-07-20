@@ -1,0 +1,12 @@
+#!/bin/sh
+# .git/hooks/commit-msg
+
+commit_msg=$(cat "$1")
+pattern="^(feat|fix|docs|style|refactor|perf|test|chore|build|ci|revert)(\(\w+\))?: .{1,50}"
+
+if ! echo "$commit_msg" | grep -qE "$pattern"; then
+  echo "错误: 提交消息不符合规范！"
+  echo "提交消息格式应该是：<type>(<scope>): <subject>"
+  echo "例如: feat(login): 添加用户登录功能"
+  exit 1
+fi
